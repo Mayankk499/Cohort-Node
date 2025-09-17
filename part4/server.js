@@ -35,7 +35,6 @@ const server = http.createServer(function (req, res) {
   }
 
   return res.writeHead(404).end("you are lost");
-  res.end("OKK!");
 });
 
 server.listen(8000, () => console.log(`Server is listening on port 8000`));
