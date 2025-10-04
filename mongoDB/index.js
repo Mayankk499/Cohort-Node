@@ -1,6 +1,7 @@
 import express from 'express';
-import { connectMONGODB } from '../mongoDB/connection.js';
 import 'dotenv/config';
+import { connectMONGODB } from '../mongoDB/connection.js';
+import userRouter from '../mongoDB/routes/user.routes.js';
 
 const app = express();
 const PORT = process.env.PORT;
@@ -8,6 +9,9 @@ const PORT = process.env.PORT;
 connectMONGODB(process.env.MONGODB_URL).then(() => 
     console.log(`mongo DB Connected`)
 );
+
+app.use(express.json());
+app.use('/user', userRouter);
 
 app.listen(PORT, () => {
     console.log(`Server is running on PORT ${PORT}`);
