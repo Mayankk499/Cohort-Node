@@ -1,8 +1,18 @@
 import express from "express";
 import User from "../models/user.model.js";
+import {ensureAuthenticated} from '../middleware/auth.middleware.js';
 import { randomBytes, createHmac } from "crypto";
 import jwt from 'jsonwebtoken';
 const router = express.Router();
+
+router.patch('/', ensureAuthenticated, async (req, res) => {
+    const {name} = req.body;
+    await User.findByIdAndUpdate(req.user._id, {
+        name,
+    });
+
+    return res.json({status: 'success'});
+})
 
 router.post("/signup", async (req, res) => {
   const { name, email, password } = req.body;
